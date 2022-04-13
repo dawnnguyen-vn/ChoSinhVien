@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
+<c:url var="luuTinAPI" value="/api/home/luu-tin"/>
 <!-- Carousel-->
 <div class="container white py-4 px-4 px-lg-4 mt-4">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -39,18 +40,18 @@
     <div class="container mt-3 white">
         <div class="row row-cols-xl-6 row-cols-sm-3 row-cols-2 justify-content-center">
 
-           <c:forEach var="item" items="${categories}">
-               <div class="col my-4">
-                   <li>
-                       <a href='<c:url value="/${item.slug}"/>' class="canh-giua-flex-column">
-                           <div>
-                               <img class="img-category" src="" alt="">
-                           </div>
-                           <span>${item.name}</span>
-                       </a>
-                   </li>
-               </div>
-           </c:forEach>
+            <c:forEach var="item" items="${categories}">
+                <div class="col my-4">
+                    <li>
+                        <a href='<c:url value="/${item.slug}"/>' class="canh-giua-flex-column">
+                            <div>
+                                <img class="img-category" src="" alt="">
+                            </div>
+                            <span>${item.name}</span>
+                        </a>
+                    </li>
+                </div>
+            </c:forEach>
 
 
         </div>
@@ -61,54 +62,71 @@
 <section>
 
     <div class="container white px-4 px-lg-4 mt-3 py-4">
-<%--        <form  action='<c:url value ="/trang-chu"/>' id="formSubmit" method="get">--%>
-            <div class=" row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <c:forEach var="item" items="${products}">
+        <%--        <form  action='<c:url value ="/trang-chu"/>' id="formSubmit" method="get">--%>
+        <div class=" row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <c:forEach var="item" items="${products}">
                 <div class="col mb-5">
-                    <a href="product-details.html">
-                        <div class="card h-100 product-card">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="${item.images.get(0).link}"
-                                 alt="..."/>
-                            <!-- Product details-->
-                            <div class="card-body canh-giua-flex-column">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <p class="">${item.name} </p>
-                                    <!-- Product price-->
-                                    <p class="fw-bold" style="color: red;">${item.price}</p>
-                                </div>
-
-                                <form action='<c:url value ="/luu-tin"/>' method="post">
-                                    <input type="hidden" name="productId" value="${item.id}">
-                                    <button id="heart-btn" class="btn btn-outline-danger
+                        <%--                    <a href="product-details.html">--%>
+                    <div class="card h-100 product-card">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="${item.images.get(0).link}"
+                             alt="..."/>
+                        <!-- Product details-->
+                        <div class="card-body canh-giua-flex-column">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <p class="">${item.name} </p>
+                                <!-- Product price-->
+                                <p class="fw-bold" style="color: red;">${item.price}</p>
+                            </div>
+                            <input type="hidden" name="productId" value="${item.id}">
+                            <button id="btn-luu${item.id}" onclick="savePost(${item.id})" class="btn btn-outline-danger
                                   <c:forEach var="like" items="${item.likes}">
                                     <c:if test="${like.user.id.equals(myUser.id)}">
                                         heart-luu
                                     </c:if>
-                                </c:forEach>
-                                 "><i class="fa fa-heart-o" aria-hidden="true"></i></button>
-                                </form>
+                                  </c:forEach>
+                                        "><i class="fa fa-heart-o" aria-hidden="true"></i></button>
 
 
-                            </div>
                         </div>
-                    </a>
+                    </div>
+                        <%--                    </a>--%>
                 </div>
-                </c:forEach>
-            </div>
-            <div class="container canh-giua">
-                    <ul class="pagination" id="pagination"></ul>
-                <input type ="hidden" value ="" id ="page" name = "page"/>
-                <input type ="hidden" value ="" id ="limit" name = "limit"/>
-            </div>
-<%--        </form>--%>
+            </c:forEach>
+        </div>
+        <div class="container canh-giua">
+            <ul class="pagination" id="pagination"></ul>
+            <input type="hidden" value="" id="page" name="page"/>
+            <input type="hidden" value="" id="limit" name="limit"/>
+        </div>
+        <%--        </form>--%>
     </div>
 
 
 </section>
 
-<script type="text/javascript">
+<script>
+
+
+    function savePost(id) {
+        $.ajax({
+            url: "${luuTinAPI}",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(id),
+            success: function (data) {
+                $("#btn-luu" + id).toggleClass("heart-luu");
+            },
+
+            error: function (error) {
+                alert("error")
+            }
+        });
+
+    };
+
+
     var totalPages = ${paging.totalPage};
     var currentPage = ${paging.page};
     $(function () {
@@ -126,4 +144,6 @@
             }
         });
     });
+
+
 </script>

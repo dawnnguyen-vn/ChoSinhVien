@@ -15,7 +15,7 @@
     <link href="<c:url value='/template/web/css/styles.css'/>" rel="stylesheet"/>
     <link href="<c:url value='/template/web/css/web.css'/>" rel="stylesheet"/>
 <%--    jquery--%>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body class="grey">
 
@@ -25,7 +25,6 @@
 
 <%@ include file="/common/web/footer.jsp" %>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
         crossorigin="anonymous"></script>

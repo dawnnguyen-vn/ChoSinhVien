@@ -83,11 +83,11 @@ public class HomeController {
 //    }
 
 //    @PreAuthorize("hasRole")
-    @PostMapping("/luu-tin")
-    public String saveProduct(@RequestParam(value = "productId") Long id) {
-        likeService.modifyUserLiked(id);
-        return "redirect:/trang-chu";
-    }
+//    @PostMapping("/luu-tin")
+//    public String saveProduct(@RequestParam(value = "productId") Long id) {
+//        likeService.modifyUserLiked(id);
+//        return "redirect:/trang-chu";
+//    }
 
     @GetMapping("/login")
     public String getLoginPage(Model model) {
