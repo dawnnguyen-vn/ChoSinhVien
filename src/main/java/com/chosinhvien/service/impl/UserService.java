@@ -67,6 +67,11 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
+    public Role saveRole(Role role) {
+        return roleService.add(role);
+    }
+
+    @Override
     public void addRoleToUser(String email, String roleName) {
         Role role = roleService.findByName(roleName);
         User user = userRepo.findByEmail(email);

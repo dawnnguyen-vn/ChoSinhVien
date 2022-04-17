@@ -11,9 +11,13 @@ public interface ProductRepo extends JpaRepository<Product, Long>, CrudRepositor
 
     Page<Product> findAllByCategoryOrderByCreatedAtDesc(Category category, Pageable pageable);
 
+    Page<Product> findAllByNameContaining(String name, Pageable pageable);
+
     Page<Product> findAllByCategoryOrderByPriceDesc(Category category, Pageable pageable);
 
     Page<Product> findAllByCategoryOrderByPriceAsc(Category category, Pageable pageable);
 
     int countByCategory(Category category);
+
+    int countByName(String name);
 }

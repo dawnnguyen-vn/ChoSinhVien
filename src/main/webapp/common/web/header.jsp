@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ include file="/common/taglib.jsp" %>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light ">
     <div class="container px-4 px-lg-5">
@@ -13,8 +14,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <form class="d-flex  form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form action="<c:url value="/search"/>" method="post" class="d-flex  form-inline my-2 my-lg-0">
+                <input name="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-primary active my-2 my-sm-0" type="submit">Search</button>
             </form>
 

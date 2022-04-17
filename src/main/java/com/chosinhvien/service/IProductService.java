@@ -14,6 +14,8 @@ public interface IProductService {
 
     Page<Product> findAll(Pageable pageable);
 
+    Page<Product> findAllByName(String name, Pageable pageable);
+
     Page<Product> findAllByCategoryOrderByCreatedAtDesc(Category category, Pageable pageable);
 
     Page<Product> findAllByCategoryOrderByPriceDesc(Category category, Pageable pageable);
@@ -21,6 +23,8 @@ public interface IProductService {
     Page<Product> findAllByCategoryOrderByPriceAsc(Category category, Pageable pageable);
 
     int getTotalItem();
+
+    int getTotalItemByName(String name);
 
     int getTotalItemByCategory(Category category);
 }

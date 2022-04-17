@@ -30,6 +30,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Page<Product> findAllByName(String name, Pageable pageable) {
+        return productRepo.findAllByNameContaining(name, pageable);
+    }
+
+    @Override
     public Page<Product> findAllByCategoryOrderByCreatedAtDesc(Category category, Pageable pageable) {
         return productRepo.findAllByCategoryOrderByCreatedAtDesc(category, pageable);
     }
@@ -48,6 +53,11 @@ public class ProductService implements IProductService {
     @Override
     public int getTotalItem() {
         return (int) productRepo.count();
+    }
+
+    @Override
+    public int getTotalItemByName(String name) {
+        return productRepo.countByName(name);
     }
 
     @Override

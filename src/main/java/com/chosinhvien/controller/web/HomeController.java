@@ -196,6 +196,30 @@ public class HomeController {
         return "web/loai-san-pham-gia-giam";
     }
 
+    @PostMapping("/search")
+    public String getProductByName(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "limit", defaultValue = "2") int limit,
+            Model model) {
+
+        Paging paging = new Paging();
+        paging.setPage(page);
+        paging.setLimit(limit);
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        paging.setTotalItem(productService.getTotalItemByName(name));
+        paging.setTotalPage((int) Math.ceil((double) paging.getTotalItem() / paging.getLimit()));
+
+        List<ProductDto> products = productService.findAllByName(name, pageable).getContent()
+                .stream().map(product -> mapper.map(product, ProductDto.class))
+                .collect(Collectors.toList());
+
+        model.addAttribute("products", products);
+        model.addAttribute("paging", paging);
+        model.addAttribute("slug", "a");
+        return "web/search";
+    }
+
     @GetMapping("/{slug}/gia-tang")
     public String getProductBySlugOrderByPriceAsc(@PathVariable("slug") String slug,
                                                   @RequestParam(value = "page", defaultValue = "1") int page,
