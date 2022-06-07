@@ -15,9 +15,10 @@
         </div>
         <p style="text-align:center"> Hoặc </p>
 
-        <input type="email" name="username" class="form-control" placeholder="Email" required="" autofocus="">
-
-        <input type="password" name="password" class="form-control" placeholder="Password" required="">
+        <input id="input-username" type="email" name="username" class="form-control" placeholder="Email" required="" autofocus="">
+        <span style="color: red" id="emailError"></span>
+        <input id="input-password" type="password" name="password" class="form-control" placeholder="Password" required="">
+        <span style="color: red" id="passwordError"></span>
 
         <button style="width: 100%;" class="btn btn-success btn-block" name="submit" type="submit"><i class="fa fa-sign-in" aria-hidden="true"></i> Đăng nhập
         </button>
@@ -47,18 +48,23 @@
         </div>
         <p style="text-align:center"> Hoặc </p>
 
-        <form:input type="email" class="form-control" placeholder="Email" required="true" autofocus="true" path="email"/>
+        <form:input id="su-email-input" type="email" class="form-control" placeholder="Email" required="true" autofocus="true" path="email"/>
+        <span style="color: red" id="su-emailError"></span>
         <form:input type="text" class="form-control" placeholder="Họ tên" required="true" path="name"/>
         <form:input type="text" class="form-control" placeholder="Số điện thoại" required="true" path="phone"/>
         <form:input type="text" class="form-control" placeholder="Địa chỉ" required="true" path="address"/>
         <form:password id="password" class="form-control" placeholder="Password" required="true" path="password"/>
         <input id="confirm_password" type="password" class="form-control" placeholder="Nhập lại Password" required/>
 
-        <button style="width: 100%;" class="btn btn-primary btn-block" type="submit"><i class="fa fa-user-plus"></i>
+        <button id="btn-su" style="width: 100%;" class="btn btn-primary btn-block" type="submit"><i class="fa fa-user-plus"></i>
             Đăng ký
         </button>
         <a style="text-align: center;" href="#" id="cancel_signup"><i class="fa fa-angle-left"></i> Trở lại</a>
     </form:form>
     <br>
-
 </div>
+
+<script>
+
+
+</script>

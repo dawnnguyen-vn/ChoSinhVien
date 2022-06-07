@@ -1,18 +1,19 @@
 package com.chosinhvien.service;
 
+import com.chosinhvien.dto.ProductDto;
 import com.chosinhvien.entity.Category;
 import com.chosinhvien.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IProductService {
 
     Optional<Product> findById(Long id);
 
-    Page<Product> findAll(Pageable pageable);
+    List<ProductDto> findAll(Pageable pageable);
 
     Page<Product> findAllByName(String name, Pageable pageable);
 
@@ -27,4 +28,6 @@ public interface IProductService {
     int getTotalItemByName(String name);
 
     int getTotalItemByCategory(Category category);
+
+    Product save(Product product);
 }

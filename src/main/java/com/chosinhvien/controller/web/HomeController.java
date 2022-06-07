@@ -3,7 +3,6 @@ package com.chosinhvien.controller.web;
 import com.chosinhvien.dto.CategoryDto;
 import com.chosinhvien.dto.ProductDto;
 import com.chosinhvien.dto.ServicePackDto;
-import com.chosinhvien.dto.UserDto;
 import com.chosinhvien.entity.Bill;
 import com.chosinhvien.entity.BillDetail;
 import com.chosinhvien.entity.Category;
@@ -18,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -50,24 +48,20 @@ public class HomeController {
 
     @GetMapping("/trang-chu")
     public String getHomePage(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "limit", defaultValue = "2") int limit, Model model) {
+
         Paging paging = new Paging();
         paging.setPage(page);
         paging.setLimit(limit);
         Pageable pageable = PageRequest.of(page - 1, limit);
         paging.setTotalItem(productService.getTotalItem());
         paging.setTotalPage((int) Math.ceil((double) paging.getTotalItem() / paging.getLimit()));
-        List<ProductDto> products = productService.findAll(pageable).getContent()
-                .stream().map(product -> mapper.map(product, ProductDto.class))
-                .collect(Collectors.toList());
 
+        List<ProductDto> products = productService.findAll(pageable);
+        List<CategoryDto> categories = categoryService.findAll();
 
-        List<CategoryDto> categories = categoryService.findAll()
-                .stream().map(category -> mapper.map(category, CategoryDto.class))
-                .collect(Collectors.toList());
         if (SecurityUtils.isUserLoggedIn()) {
             MyUser auth = SecurityUtils.getPrincipal();
             model.addAttribute("myUser", auth);
-
         }
 
         model.addAttribute("categories", categories);
@@ -89,21 +83,12 @@ public class HomeController {
 //        return "redirect:/trang-chu";
 //    }
 
-    @GetMapping("/login")
-    public String getLoginPage(Model model) {
-        UserDto user = new UserDto();
-        model.addAttribute("user", user);
-        return "login";
-    }
 
     @GetMapping("/mua-diem")
     public String getMuaDiemPage(HttpServletRequest req, Model model) {
-        List<ServicePackDto> servicePacks = servicePackService.findAll()
-                .stream().map(servicePack -> mapper.map(servicePack, ServicePackDto.class))
-                .collect(Collectors.toList());
+        List<ServicePackDto> servicePacks = servicePackService.findAll();
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         Cart cart = Utils.getCartInSession(req);
         cart.setUser(userService.findByEmail(auth.getName()));
 
@@ -139,7 +124,7 @@ public class HomeController {
             BillDetail newBillDetail = new BillDetail();
             newBillDetail.setId(0L);
             newBillDetail.setAmount(cartItem.getAmount());
-            newBillDetail.setQuanity(cartItem.getQuantity());
+            newBillDetail.setQuantity(cartItem.getQuantity());
             newBillDetail.setServicePack(cartItem.getServicePack());
             newBillDetail.setBill(bill);
             newOrderDetails.add(newBillDetail);

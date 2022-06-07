@@ -4,7 +4,7 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light ">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="home.html">
+        <a class="navbar-brand" href="<c:url value ='/'/>">
             <img src="/template/web/assets/csv-logo.png" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -89,7 +89,7 @@
             </div>
 
             <div class="d-flex">
-                <a href="tin-dang.html" class="btn btn-primary">
+                <a href="<c:url value="/dang-tin"/>" class="btn btn-primary">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     Đăng tin
                 </a>

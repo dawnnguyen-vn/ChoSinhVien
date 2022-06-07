@@ -18,16 +18,56 @@ $(()=>{
     $('#logreg-forms #cancel_signup').click(toggleSignUp);
 })
 
-var password = document.getElementById("password")
-    , confirm_password = document.getElementById("confirm_password");
 
-function validatePassword(){
-    if(password.value != confirm_password.value) {
-        confirm_password.setCustomValidity("Passwords Don't Match");
-    } else {
-        confirm_password.setCustomValidity('');
-    }
+const $$$ = (id) => {
+    return document.getElementById(id);
+};
+
+$$$('input-username').addEventListener('blur', () => {
+    let email = $$$('input-username').value;
+    email = email.slice(0, -10);
+    fetch('http://localhost:8080/api/home/check/' + email || ' ')
+        .then(response => response.json())
+        .then(response => {
+            if (response === false) {
+                $$$('emailError').innerHTML = "Email không tồn tại!";
+            }
+        })
+});
+
+$$$('input-username').addEventListener('focus', () => {
+    $$$('emailError').innerHTML = "";
+})
+
+$$$('su-email-input').addEventListener('blur', () => {
+    let email = $$$('su-email-input').value;
+    email = email.slice(0, -10);
+    fetch('http://localhost:8080/api/home/check/' + email || ' ')
+        .then(response => response.json())
+        .then(response => {
+            if (response === true) {
+                $$$('su-emailError').innerHTML = "Email đã tồn tại!";
+                $$$('btn-su').disabled = true;
+            }
+        })
+});
+
+$$$('su-email-input').addEventListener('focus', () => {
+    $$$('su-emailError').innerHTML = "";
+    $$$('btn-su').disabled = false;
+})
+
+$$$('input-password').addEventListener('focus', () => {
+    $$$('passwordError').innerHTML = "";
+
+})
+
+const url_string = window.location.href;
+const url = new URL(url_string);
+const error = url.searchParams.get("error");
+if (error != null) {
+    $$$('passwordError').innerHTML = "Mật khẩu không đúng";
+} else {
+    $$$('passwordError').innerHTML = "";
 }
 
-password.onchange = validatePassword;
-confirm_password.onkeyup = validatePassword;

@@ -32,7 +32,7 @@ public class BillDetail {
     private ServicePack servicePack;
 
     @Column(nullable = false)
-    private int quanity;
+    private int quantity;
 
     @Column(nullable = false)
     private double amount;

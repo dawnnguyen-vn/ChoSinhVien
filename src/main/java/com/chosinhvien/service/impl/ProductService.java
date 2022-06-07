@@ -1,15 +1,18 @@
 package com.chosinhvien.service.impl;
 
+import com.chosinhvien.dto.ProductDto;
 import com.chosinhvien.entity.Category;
 import com.chosinhvien.entity.Product;
 import com.chosinhvien.repository.ProductRepo;
 import com.chosinhvien.service.IProductService;
+import com.chosinhvien.util.DataMapperUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,7 +20,7 @@ import java.util.Optional;
 public class ProductService implements IProductService {
 
     private final ProductRepo productRepo;
-
+    private final DataMapperUtils mapper;
 
     @Override
     public Optional<Product> findById(Long id) {
@@ -25,8 +28,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Page<Product> findAll(Pageable pageable) {
-        return productRepo.findAll(pageable);
+    public List<ProductDto> findAll(Pageable pageable) {
+        List<Product> products = productRepo.findAll(pageable).getContent();
+        return mapper.mapAll(products, ProductDto.class);
     }
 
     @Override
@@ -65,5 +69,8 @@ public class ProductService implements IProductService {
         return productRepo.countByCategory(category);
     }
 
-
+    @Override
+    public Product save(Product product) {
+        return productRepo.save(product);
+    }
 }

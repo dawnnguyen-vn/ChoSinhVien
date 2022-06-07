@@ -17,6 +17,13 @@ public class UserController {
     private final IRegistrationService registrationService;
     private final ModelMapper mapper;
 
+    @GetMapping("/login")
+    public String getLoginPage(Model model) {
+        UserDto user = new UserDto();
+        model.addAttribute("user", user);
+        return "login";
+    }
+
     @PostMapping("/signup")
     public String register(@ModelAttribute("user") UserDto userDto, Model model) {
         User user = mapper.map(userDto, User.class);

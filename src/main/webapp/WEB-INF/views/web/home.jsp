@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
 <c:url var="luuTinAPI" value="/api/home/luu-tin"/>
+<c:url var="login" value="/login"/>
 <!-- Carousel-->
 <div class="container white py-4 px-4 px-lg-4 mt-4">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -116,11 +117,14 @@
             contentType: "application/json",
             data: JSON.stringify(id),
             success: function (data) {
+                if (data !== '') {
+                    window.location.replace("${login}");
+                }
                 $("#btn-luu" + id).toggleClass("heart-luu");
             },
 
             error: function (error) {
-                alert("error")
+                alert("error");
             }
         });
 

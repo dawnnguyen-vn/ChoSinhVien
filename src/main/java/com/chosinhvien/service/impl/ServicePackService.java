@@ -1,8 +1,10 @@
 package com.chosinhvien.service.impl;
 
+import com.chosinhvien.dto.ServicePackDto;
 import com.chosinhvien.entity.ServicePack;
 import com.chosinhvien.repository.ServicePackRepo;
 import com.chosinhvien.service.IServicePackService;
+import com.chosinhvien.util.DataMapperUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +17,11 @@ import java.util.Optional;
 public class ServicePackService implements IServicePackService {
 
     private final ServicePackRepo servicePackRepo;
+    private final DataMapperUtils mapper;
 
     @Override
-    public List<ServicePack> findAll() {
-        return servicePackRepo.findAll();
+    public List<ServicePackDto> findAll() {
+        return mapper.mapAll(servicePackRepo.findAll(), ServicePackDto.class);
     }
 
     @Override

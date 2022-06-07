@@ -43,6 +43,7 @@
         </dependency>
 
         <!--        loading jsp file-->
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -53,7 +54,6 @@
             <artifactId>tomcat-embed-jasper</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <!--        chia giao dien jsp-->
         <dependency>
             <groupId>opensymphony</groupId>

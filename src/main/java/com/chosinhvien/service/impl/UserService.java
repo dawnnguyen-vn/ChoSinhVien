@@ -88,4 +88,11 @@ public class UserService implements IUserService, UserDetailsService {
         return userRepo.updateEnable(email);
     }
 
+    @Override
+    public boolean exists(String email) {
+        User user = userRepo.findByEmail(email);
+        if(user != null) return true;
+        return false;
+    }
+
 }
