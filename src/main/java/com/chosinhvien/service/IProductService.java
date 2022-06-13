@@ -1,11 +1,13 @@
 package com.chosinhvien.service;
 
 import com.chosinhvien.dto.ProductDto;
+import com.chosinhvien.dto.ProductDtoWrite;
 import com.chosinhvien.entity.Category;
 import com.chosinhvien.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,4 +32,6 @@ public interface IProductService {
     int getTotalItemByCategory(Category category);
 
     Product save(Product product);
+
+    Product save(ProductDtoWrite product, HttpServletRequest req) throws Exception;
 }

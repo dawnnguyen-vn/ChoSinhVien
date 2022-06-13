@@ -89,7 +89,7 @@
             </div>
 
             <div class="d-flex">
-                <a href="<c:url value="/dang-tin"/>" class="btn btn-primary">
+                <a href="<c:url value='/dang-tin'/>" class="btn btn-primary">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     Đăng tin
                 </a>

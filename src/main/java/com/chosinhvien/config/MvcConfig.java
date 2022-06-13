@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan({"com.chosinhvien.controller.web","com.chosinhvien.controller.admin"})
+@ComponentScan({"com.chosinhvien.controller","com.chosinhvien.controller.web","com.chosinhvien.controller.admin"})
 public class MvcConfig implements WebMvcConfigurer {
 
     @Override

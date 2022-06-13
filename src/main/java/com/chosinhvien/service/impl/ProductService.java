@@ -1,17 +1,20 @@
 package com.chosinhvien.service.impl;
 
 import com.chosinhvien.dto.ProductDto;
+import com.chosinhvien.dto.ProductDtoWrite;
 import com.chosinhvien.entity.Category;
 import com.chosinhvien.entity.Product;
 import com.chosinhvien.repository.ProductRepo;
 import com.chosinhvien.service.IProductService;
 import com.chosinhvien.util.DataMapperUtils;
+import com.chosinhvien.util.FileHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,7 @@ public class ProductService implements IProductService {
 
     private final ProductRepo productRepo;
     private final DataMapperUtils mapper;
+    private final FileHandler fileHandler;
 
     @Override
     public Optional<Product> findById(Long id) {
@@ -72,5 +76,12 @@ public class ProductService implements IProductService {
     @Override
     public Product save(Product product) {
         return productRepo.save(product);
+    }
+
+    @Override
+    public Product save(ProductDtoWrite product, HttpServletRequest req) throws Exception {
+        String resu = fileHandler.upload(product.getImage(), req);
+        System.out.println(resu);
+        return null;
     }
 }

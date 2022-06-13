@@ -27,13 +27,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/*",
-                            "/template/**",
-                            "/login",
-                            "/api/home/check/**"
-                    ).permitAll()
-//                    .antMatchers("/api/**").hasRole(UserRole.USER.name())
-                    .antMatchers("/admin/**").hasRole(UserRole.ADMIN.name())
+                .antMatchers("/**",
+                        "/template/**",
+                        "/login"
+                ).permitAll()
+                .antMatchers("/api/**").hasRole(UserRole.USER.name())
+                .antMatchers("/admin/**").hasRole(UserRole.ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -46,7 +45,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
-
 
 
 }

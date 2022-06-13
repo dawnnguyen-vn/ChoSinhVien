@@ -1,24 +1,15 @@
 package com.chosinhvien.dto;
 
-import com.chosinhvien.entity.Category;
-import com.chosinhvien.entity.Image;
-import com.chosinhvien.entity.Like;
-import com.chosinhvien.entity.User;
 import lombok.Data;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class ProductDtoWrite {
 
     private String name;
     private double price;
-    private List<Image> images = new ArrayList<>();
-    private List<Like> likes = new ArrayList<>();
+    private MultipartFile image;
     private String description;
-    private Category category;
-    private User user;
+    private String category;
 
 }
