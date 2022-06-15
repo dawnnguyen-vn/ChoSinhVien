@@ -11,7 +11,9 @@ import com.chosinhvien.service.IRoleService;
 import com.chosinhvien.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -81,6 +83,16 @@ public class UserService implements IUserService, UserDetailsService {
     @Override
     public User findByEmail(String email) {
         return userRepo.findByEmail(email);
+    }
+
+    @Override
+    public String getUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+        return  authentication.getName();
     }
 
     @Override

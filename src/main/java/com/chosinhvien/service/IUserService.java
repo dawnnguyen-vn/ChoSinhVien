@@ -14,7 +14,7 @@ public interface IUserService {
     void addRoleToUser(String email, String roleName);
     User findByEmail(String email);
     int enableUser(String email);
-
+    String getUsername();
     @PreAuthorize("permitAll()")
     boolean exists(String email);
 }

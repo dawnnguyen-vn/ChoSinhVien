@@ -8,8 +8,9 @@ public class ProductDtoWrite {
 
     private String name;
     private double price;
-    private MultipartFile image;
+    private MultipartFile[] image;
     private String description;
     private String category;
+    private String location;
 
 }

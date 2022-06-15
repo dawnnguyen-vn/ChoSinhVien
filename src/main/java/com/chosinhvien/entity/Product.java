@@ -1,5 +1,6 @@
 package com.chosinhvien.entity;
 
+import com.chosinhvien.entity.location.Location;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,6 +43,10 @@ public class Product {
     )
     private Category category;
 
+    @OneToOne
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
+
     @ManyToOne
     @JoinColumn(
             name = "user_id",
@@ -49,6 +54,20 @@ public class Product {
     )
     private User user;
 
+    public void addLocation(Location location) {
+        this.setLocation(location);
+        location.setProduct(this);
+    }
 
+
+    public void addImage(Image image) {
+        images.add(image);
+        image.setProduct(this);
+    }
+
+    public void removeImage(Image image) {
+        images.remove(image);
+        image.setProduct(null);
+    }
 
 }
