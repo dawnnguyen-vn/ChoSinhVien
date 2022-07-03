@@ -17,6 +17,8 @@ public interface IProductService {
 
     List<ProductDto> findAll(Pageable pageable);
 
+    List<ProductDto> findAll();
+
     Page<Product> findAllByName(String name, Pageable pageable);
 
     Page<Product> findAllByCategoryOrderByCreatedAtDesc(Category category, Pageable pageable);
@@ -34,4 +36,8 @@ public interface IProductService {
     Product save(Product product);
 
     Product save(ProductDtoWrite product, HttpServletRequest req) throws Exception;
+
+    List<ProductDto> findAllByCategory(Category category);
+
+    List<ProductDto> findAllByUser(Long id);
 }

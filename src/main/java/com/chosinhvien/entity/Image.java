@@ -19,9 +19,10 @@ public class Image {
     @Column(nullable = false)
     private String link;
 
-    @ManyToOne
-    @JoinColumn(name="product_id",
-                nullable=false)
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
 

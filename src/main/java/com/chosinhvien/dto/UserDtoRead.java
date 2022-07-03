@@ -15,6 +15,7 @@ public class UserDtoRead {
     private String name;
     private String phone;
     private String address;
+    private int point;
     private Boolean locked;
     private Boolean enabled;
 

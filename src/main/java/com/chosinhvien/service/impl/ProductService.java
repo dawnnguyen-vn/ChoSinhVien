@@ -5,6 +5,7 @@ import com.chosinhvien.dto.ProductDtoWrite;
 import com.chosinhvien.entity.Category;
 import com.chosinhvien.entity.Image;
 import com.chosinhvien.entity.Product;
+import com.chosinhvien.entity.User;
 import com.chosinhvien.entity.location.Location;
 import com.chosinhvien.repository.ProductRepo;
 import com.chosinhvien.service.ICategoryService;
@@ -15,16 +16,16 @@ import com.chosinhvien.util.FileHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ProductService implements IProductService {
 
@@ -42,6 +43,12 @@ public class ProductService implements IProductService {
     @Override
     public List<ProductDto> findAll(Pageable pageable) {
         List<Product> products = productRepo.findAll(pageable).getContent();
+        return mapper.mapAll(products, ProductDto.class);
+    }
+
+    @Override
+    public List<ProductDto> findAll() {
+        List<Product> products = productRepo.findAll();
         return mapper.mapAll(products, ProductDto.class);
     }
 
@@ -92,16 +99,29 @@ public class ProductService implements IProductService {
         entity.setName(product.getName());
         entity.setPrice(product.getPrice());
         List<String> imageNames = fileHandler.upload(product.getImage(), req);
-        imageNames.forEach(image -> entity.addImage(new Image(0L, image, null)));
+        imageNames.forEach(image -> entity.addImage(new Image(null, image, null)));
         entity.setDescription(product.getDescription());
         entity.setCreatedAt(LocalDateTime.now());
         Category category = categoryService.findBySlug(product.getCategory());
         entity.setCategory(category);
         String[] ls = product.getLocation().split(",");
-        Location location = new Location(0L, Integer.parseInt(ls[3]), Integer.parseInt(ls[2]), Integer.parseInt(ls[1]), ls[0], null);
+        Location location = new Location(null, Integer.parseInt(ls[3]), Integer.parseInt(ls[2]), Integer.parseInt(ls[1]), ls[0], null);
         entity.setLocation(location);
         entity.setUser(userService.findByEmail(userService.getUsername()));
         productRepo.save(entity);
         return null;
+    }
+
+    @Override
+    public List<ProductDto> findAllByCategory(Category category) {
+        List<ProductDto> products = mapper.mapAll(productRepo.findAllByCategory(category), ProductDto.class);
+        return products;
+    }
+
+    @Override
+    public List<ProductDto> findAllByUser(Long id) {
+        User user = userService.findEntityById(id);
+        List<Product> products = productRepo.findAllByUser(user);
+        return mapper.mapAll(products, ProductDto.class);
     }
 }

@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface IUserService {
     List<UserDto> findAll();
+    UserDto findById(Long id);
+    User findEntityById(Long id);
     User add(User user);
     Role saveRole(Role role);
     void addRoleToUser(String email, String roleName);
@@ -17,4 +19,12 @@ public interface IUserService {
     String getUsername();
     @PreAuthorize("permitAll()")
     boolean exists(String email);
+
+    void editName(Long id, String name);
+
+    void editPhone(Long id, String phone);
+
+    void editAddress(Long id, String address);
+
+    void setPoint(int point);
 }

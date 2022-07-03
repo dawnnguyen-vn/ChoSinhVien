@@ -56,6 +56,16 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
+    public UserDto findById(Long id) {
+        return modelMapper.map(userRepo.findById(id).get(), UserDto.class);
+    }
+
+    @Override
+    public User findEntityById(Long id) {
+        return userRepo.findById(id).get();
+    }
+
+    @Override
     public User add(User user) {
         user.setId(0L);
         user.setEnabled(false);
@@ -105,6 +115,30 @@ public class UserService implements IUserService, UserDetailsService {
         User user = userRepo.findByEmail(email);
         if(user != null) return true;
         return false;
+    }
+
+    @Override
+    public void editName(Long id, String name) {
+        User user = userRepo.findById(id).get();
+        user.setName(name);
+    }
+
+    @Override
+    public void editPhone(Long id, String phone) {
+        User user = userRepo.findById(id).get();
+        user.setPhone(phone);
+    }
+
+    @Override
+    public void editAddress(Long id, String address) {
+        User user = userRepo.findById(id).get();
+        user.setAddress(address);
+    }
+
+    @Override
+    public void setPoint(int point) {
+        User user = userRepo.findByEmail(getUsername());
+        user.setPoint(user.getPoint() + point);
     }
 
 }

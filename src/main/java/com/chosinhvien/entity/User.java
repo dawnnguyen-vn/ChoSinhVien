@@ -41,6 +41,9 @@ public class User {
     private String address;
 
     @Column(nullable = false)
+    private int point;
+
+    @Column(nullable = false)
     private Boolean locked;
 
     @Column(nullable = false)

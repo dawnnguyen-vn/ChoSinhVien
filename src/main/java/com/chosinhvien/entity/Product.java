@@ -25,7 +25,11 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
     private List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "productLiked")
@@ -43,7 +47,7 @@ public class Product {
     )
     private Category category;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
@@ -53,12 +57,6 @@ public class Product {
             nullable = false
     )
     private User user;
-
-    public void addLocation(Location location) {
-        this.setLocation(location);
-        location.setProduct(this);
-    }
-
 
     public void addImage(Image image) {
         images.add(image);

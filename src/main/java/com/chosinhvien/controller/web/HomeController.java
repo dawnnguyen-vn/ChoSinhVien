@@ -3,11 +3,9 @@ package com.chosinhvien.controller.web;
 import com.chosinhvien.dto.CategoryDto;
 import com.chosinhvien.dto.ProductDto;
 import com.chosinhvien.dto.ServicePackDto;
-import com.chosinhvien.entity.Bill;
-import com.chosinhvien.entity.BillDetail;
-import com.chosinhvien.entity.Category;
-import com.chosinhvien.entity.ServicePack;
+import com.chosinhvien.entity.*;
 import com.chosinhvien.model.Cart;
+import com.chosinhvien.model.CartItem;
 import com.chosinhvien.model.MyUser;
 import com.chosinhvien.service.*;
 import com.chosinhvien.util.Paging;
@@ -17,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -70,11 +69,11 @@ public class HomeController {
         return "web/home";
     }
 
-//    @PreAuthorize("hasRole('USER')")
-//    @GetMapping("/test")
-//    public String getHomeTest() {
-//        return "re";
-//    }
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/test")
+    public String getHomeTest() {
+        return "error";
+    }
 
 //    @PreAuthorize("hasRole")
 //    @PostMapping("/luu-tin")
@@ -110,6 +109,7 @@ public class HomeController {
 
     @PostMapping("/mua-diem/thanh-toan")
     public String createOrder(HttpServletRequest req, Model model) {
+        int point = 0;
         Cart cart = Utils.getCartInSession(req);
         Bill newBill = new Bill(
                 0L,
@@ -120,16 +120,17 @@ public class HomeController {
         );
         Bill bill = billService.create(newBill);
         List<BillDetail> newOrderDetails = new ArrayList<>();
-        cart.getCartItems().forEach(cartItem -> {
+        for (CartItem cartItem : cart.getCartItems()) {
             BillDetail newBillDetail = new BillDetail();
             newBillDetail.setId(0L);
             newBillDetail.setAmount(cartItem.getAmount());
             newBillDetail.setQuantity(cartItem.getQuantity());
             newBillDetail.setServicePack(cartItem.getServicePack());
             newBillDetail.setBill(bill);
+            point += (cartItem.getServicePack().getPoints()*cartItem.getQuantity());
             newOrderDetails.add(newBillDetail);
-        });
-
+        }
+        userService.setPoint(point);
         billDetailService.saveAll(newOrderDetails);
         cart.clear();
         return "web/test";

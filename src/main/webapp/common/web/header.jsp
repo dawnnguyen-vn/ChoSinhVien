@@ -26,24 +26,36 @@
                                                                            aria-hidden="true"></i> Chat</a></li>
                 <li class="nav-item me-1"><a class="nav-link" href="#!"><i class="fa fa-bell"
                                                                            aria-hidden="true"></i> Thông báo</a></li>
+            </ul>
+
+            <c:if test="${myUser != null}">
+                <!-- sau khi dang nhap -->
+
+
                 <li class="nav-item dropdown">
+
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">Thêm</a>
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="canh-giua-start dang-nhap text-white">
+                            <i class="fa fa-user-circle-o" style="font-size: 35px;" aria-hidden="true"></i>
+                            <div style="color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100px;">${myUser.username}</div>
+                        </div>
+                    </a>
+
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item mt-2" href="profile.html">
-                                <div>
-                                    <img style="width: 60px; height: 60px; border-radius: 100%;" src="assets/sh.jpg"
-                                         alt="">
-                                    <span>Nguyễn Công Danh</span>
-
-                                </div>
+                            <a class="dropdown-item canh-giua-start" href="<c:url value='/profile'/>">
+                                <i class="fa fa-address-book me-1" style="color: royalblue; font-size: 30px;" aria-hidden="true"></i>
+                                Trang cá nhân
                             </a>
                         </li>
                         <hr class="dropdown-divider"/>
-                        <li><a class="dropdown-item canh-giua-start" href="tin-luu.html"><i
-                                class="fa fa-gratipay me-1" style="color: red; font-size: 30px;"
-                                aria-hidden="true"></i>Tin đăng đã lưu</a></li>
+                        <li>
+                            <a class="dropdown-item canh-giua-start" href="<c:url value='/likes'/>">
+                                <i class="fa fa-gratipay me-1" style="color: red; font-size: 30px;" aria-hidden="true"></i>
+                                Tin đăng đã lưu
+                            </a>
+                        </li>
 
                         <li><a class="dropdown-item canh-giua-start" href="#!"><i class="fa fa-users me-1"
                                                                                   style="color: royalblue; font-size: 25px;"
@@ -58,35 +70,36 @@
                                                                                   style="font-size: 30px;"
                                                                                   aria-hidden="true"></i>Cài đặt thông
                             tin</a></li>
-                        <li><a class="dropdown-item canh-giua-start" href="#!"><i class="fa fa-sign-out me-1"
+                        <li><a class="dropdown-item canh-giua-start" href="<c:url value='/logout'/>"><i class="fa fa-sign-out me-1"
                                                                                   style="font-size: 30px;"
                                                                                   aria-hidden="true"></i> Đăng xuất</a>
                         </li>
                     </ul>
                 </li>
-            </ul>
 
-            <!-- sau khi dang nhap -->
+                <%--                <div class="me-3 mb-3 mt-3">--%>
+                <%--                    <a href="profile.html">--%>
+                <%--                        <div class="canh-giua-start dang-nhap text-white">--%>
+                <%--                            <i class="fa fa-user-circle-o" style="font-size: 35px;" aria-hidden="true"></i>--%>
+                <%--                            <div style="color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 50px;">${myUser.name}</div>--%>
+                <%--                        </div>--%>
+                <%--                    </a>--%>
+                <%--                </div>--%>
+            </c:if>
 
-            <!-- <div class="me-3 mb-3">
-                <a href="profile.html">
-                    <div class="canh-giua-start dang-nhap text-white">
-                        <img style="width: 35px; height: 35px; border-radius: 100%;" src="assets/sh.jpg" alt="">
-                        <span style="color: #ffffff;">Nguyễn Công Danh</span>
-                    </div>
-                </a>
-            </div> -->
+            <c:if test="${myUser == null}">
+                <!-- truoc khi dang nhap -->
+                <div class="me-3 mb-3 mt-3">
+                    <a href="<c:url value='/login'/> ">
+                        <div class="canh-giua-start dang-nhap text-white">
+                            <i class="fa fa-user-circle-o" style="font-size: 35px;" aria-hidden="true"></i>
+                            <span class="mx-1">Đăng nhập</span>
+                        </div>
 
-            <!-- truoc khi dang nhap -->
-            <div class="me-3 mb-3 mt-3">
-                <a href="login.html ">
-                    <div class="canh-giua-start dang-nhap text-white">
-                        <i class="fa fa-user-circle-o" style="font-size: 35px;" aria-hidden="true"></i>
-                        <span class="mx-1">Đăng nhập</span>
-                    </div>
+                    </a>
+                </div>
+            </c:if>
 
-                </a>
-            </div>
 
             <div class="d-flex">
                 <a href="<c:url value='/dang-tin'/>" class="btn btn-primary">
