@@ -1,8 +1,11 @@
 package com.chosinhvien.repository;
 
+import com.chosinhvien.entity.Bill;
 import com.chosinhvien.entity.BillDetail;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BillDetailRepo extends CrudRepository<BillDetail, Long> {
+import java.util.List;
 
+public interface BillDetailRepo extends JpaRepository<BillDetail, Long> {
+    List<BillDetail> findAllByBill(Bill bill);
 }

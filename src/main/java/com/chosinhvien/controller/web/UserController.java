@@ -1,11 +1,14 @@
 package com.chosinhvien.controller.web;
 
+import com.chosinhvien.dto.BillDto;
 import com.chosinhvien.dto.ProductDto;
 import com.chosinhvien.dto.UserDto;
 import com.chosinhvien.dto.UserDtoRead;
+import com.chosinhvien.entity.Bill;
 import com.chosinhvien.entity.Like;
 import com.chosinhvien.entity.User;
 import com.chosinhvien.model.MyUser;
+import com.chosinhvien.service.IBillService;
 import com.chosinhvien.service.IProductService;
 import com.chosinhvien.service.IRegistrationService;
 import com.chosinhvien.service.IUserService;
@@ -27,6 +30,7 @@ public class UserController {
     private final ModelMapper mapper;
     private final IUserService userService;
     private final IProductService productService;
+    private final IBillService billService;
 
     @GetMapping("/login")
     public String getLoginPage(Model model) {
@@ -46,6 +50,18 @@ public class UserController {
         return "/web/profile";
     }
 
+    @GetMapping("/history")
+    public String getHistoryPage(Model model) {
+        if (SecurityUtils.isUserLoggedIn()) {
+            MyUser auth = SecurityUtils.getPrincipal();
+            model.addAttribute("myUser", auth);
+            List<BillDto> bills = billService.findByUser(auth.getId());
+            model.addAttribute("bills", bills);
+        }
+
+        return "/web/history";
+    }
+
     @GetMapping("/likes")
     public String getLikesPage(Model model) {
         if (SecurityUtils.isUserLoggedIn()) {
@@ -54,7 +70,7 @@ public class UserController {
             List<ProductDto> products = productService.findAll();
             List<ProductDto> productsLiked = new ArrayList<>();
             for (ProductDto product : products) {
-                for(Like like: product.getLikes()) {
+                for (Like like : product.getLikes()) {
                     if (like.getUser().getId().equals(auth.getId())) {
                         productsLiked.add(product);
                     }

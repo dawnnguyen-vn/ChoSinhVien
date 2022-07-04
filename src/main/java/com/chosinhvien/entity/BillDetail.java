@@ -22,7 +22,7 @@ public class BillDetail {
             name = "bill_id",
             nullable = false
     )
-    private Bill Bill;
+    private Bill bill;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(

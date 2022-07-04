@@ -57,6 +57,12 @@
                             </a>
                         </li>
 
+                        <li>
+                            <a class="dropdown-item canh-giua-start" href="<c:url value='/history'/>"><i class="fa fa-list-alt me-1"
+                                                                                  style="font-size: 30px;"
+                                                                                  aria-hidden="true"></i>Lịch sử giao dịch</a>
+                        </li>
+
                         <li><a class="dropdown-item canh-giua-start" href="#!"><i class="fa fa-users me-1"
                                                                                   style="color: royalblue; font-size: 25px;"
                                                                                   aria-hidden="true"></i>Bạn bè</a>
@@ -66,10 +72,7 @@
                                                                                   style="font-size: 30px;"
                                                                                   aria-hidden="true"></i>Trợ giúp</a>
                         </li>
-                        <li><a class="dropdown-item canh-giua-start" href="#!"><i class="fa fa-cog me-1"
-                                                                                  style="font-size: 30px;"
-                                                                                  aria-hidden="true"></i>Cài đặt thông
-                            tin</a></li>
+
                         <li><a class="dropdown-item canh-giua-start" href="<c:url value='/logout'/>"><i class="fa fa-sign-out me-1"
                                                                                   style="font-size: 30px;"
                                                                                   aria-hidden="true"></i> Đăng xuất</a>
