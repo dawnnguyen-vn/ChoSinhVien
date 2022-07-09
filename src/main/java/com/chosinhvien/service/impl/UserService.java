@@ -3,14 +3,17 @@ package com.chosinhvien.service.impl;
 import com.chosinhvien.constant.MessageException;
 import com.chosinhvien.constant.UserRole;
 import com.chosinhvien.dto.UserDto;
+import com.chosinhvien.email.IEmailService;
 import com.chosinhvien.entity.Role;
 import com.chosinhvien.entity.User;
 import com.chosinhvien.model.MyUser;
 import com.chosinhvien.repository.UserRepo;
 import com.chosinhvien.service.IRoleService;
 import com.chosinhvien.service.IUserService;
+import com.chosinhvien.util.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +37,7 @@ public class UserService implements IUserService, UserDetailsService {
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final IRoleService roleService;
+    private final IEmailService emailService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -139,6 +143,17 @@ public class UserService implements IUserService, UserDetailsService {
     public void setPoint(int point) {
         User user = userRepo.findByEmail(getUsername());
         user.setPoint(user.getPoint() + point);
+    }
+
+    @Override
+    public void resetPassword(String email) throws CustomException {
+        User user = userRepo.findByEmail(email);
+        if(user == null) {
+            throw new CustomException("User khong ton tai", HttpStatus.BAD_REQUEST);
+        }else {
+            user.setPassword(bCryptPasswordEncoder.encode("1234"));
+            emailService.send(email, "Mật khẩu mới của bạn là: 1234");
+        }
     }
 
 }

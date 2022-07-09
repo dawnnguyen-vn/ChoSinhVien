@@ -20,7 +20,7 @@
             </form>
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item me-1"><a class="nav-link" aria-current="page" href="quan-ly-tin.html"><i
+                <li class="nav-item me-1"><a class="nav-link" aria-current="page" href="<c:url value="/quan-ly-tin"/>"><i
                         class="fa fa-file-text" aria-hidden="true"></i> Quản lý tin</a></li>
                 <li class="nav-item me-1"><a class="nav-link" href="#!"><i class="fa fa-commenting"
                                                                            aria-hidden="true"></i> Chat</a></li>

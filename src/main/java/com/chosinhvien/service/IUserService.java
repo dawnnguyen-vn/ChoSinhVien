@@ -3,6 +3,7 @@ package com.chosinhvien.service;
 import com.chosinhvien.dto.UserDto;
 import com.chosinhvien.entity.Role;
 import com.chosinhvien.entity.User;
+import com.chosinhvien.util.CustomException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface IUserService {
     void editAddress(Long id, String address);
 
     void setPoint(int point);
+
+    void resetPassword(String email) throws CustomException;
 }

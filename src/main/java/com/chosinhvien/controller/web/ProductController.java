@@ -3,16 +3,12 @@ package com.chosinhvien.controller.web;
 import com.chosinhvien.dto.CategoryDto;
 import com.chosinhvien.dto.ProductDto;
 import com.chosinhvien.dto.ProductDtoWrite;
-import com.chosinhvien.entity.Category;
-import com.chosinhvien.entity.Product;
 import com.chosinhvien.model.MyUser;
 import com.chosinhvien.service.ICategoryService;
 import com.chosinhvien.service.IProductService;
-import com.chosinhvien.util.CustomException;
 import com.chosinhvien.util.DataMapperUtils;
 import com.chosinhvien.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +43,19 @@ public class ProductController {
     }
 
     @PreAuthorize("hasRole('USER')")
+    @GetMapping("/quan-ly-tin")
+    public String getPostManagementPage(Model model) {
+
+        if (SecurityUtils.isUserLoggedIn()) {
+            MyUser auth = SecurityUtils.getPrincipal();
+            List<ProductDto> products = productService.findAllByUser(auth.getId());
+            model.addAttribute("products", products);
+            model.addAttribute("myUser", auth);
+        }
+        return "web/quan-ly-tin";
+    }
+
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/dang-tin")
     public String getDangTinPage(Model model) {
         ProductDtoWrite product = new ProductDtoWrite();
@@ -63,8 +72,13 @@ public class ProductController {
     @PostMapping("/dang-tin")
     public String post(@ModelAttribute("product") ProductDtoWrite product, HttpServletRequest req, Model model) throws Exception {
         productService.save(product, req);
-        System.out.println(3);
-        return "web/test";
+        return "redirect:/quan-ly-tin";
+    }
+
+    @PostMapping("/{id}/remove")
+    public String post(@PathVariable("id") Long id, Model model) {
+        productService.remove(id);
+        return "redirect:/quan-ly-tin";
     }
 
 

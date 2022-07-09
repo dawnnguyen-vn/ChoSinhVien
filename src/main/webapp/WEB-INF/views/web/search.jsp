@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
-
+<c:url var="luuTinAPI" value="/api/home/luu-tin"/>
 <!-- filter -->
 <section>
     <div class="container white px-2 px-lg-2 mt-3 py-2 canh-giua">
@@ -38,10 +38,10 @@
             <div class=" row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <c:forEach var="item" items="${products}">
                     <div class="col mb-5">
-                        <a href="product-details.html">
+                        <a href="<c:url value='/tin-dang/${item.id}'/>">
                             <div class="card h-100 product-card">
                                 <!-- Product image-->
-                                <img class="card-img-top" src="${item.images.get(0).link}"
+                                <img class="card-img-top" src="/template/images/${item.images.get(0).link}"
                                      alt="..."/>
                                 <!-- Product details-->
                                 <div class="card-body canh-giua-flex-column">

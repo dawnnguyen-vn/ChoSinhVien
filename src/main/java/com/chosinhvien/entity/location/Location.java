@@ -31,6 +31,7 @@ public class Location {
     @Column(name = "_specification")
     private String specification;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "location")
     private Product product;
 

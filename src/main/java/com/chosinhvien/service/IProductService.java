@@ -40,4 +40,6 @@ public interface IProductService {
     List<ProductDto> findAllByCategory(Category category);
 
     List<ProductDto> findAllByUser(Long id);
+
+    void remove(Long id);
 }

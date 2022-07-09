@@ -16,6 +16,25 @@
     <link href="<c:url value='/template/web/css/web.css'/>" rel="stylesheet"/>
 <%--    jquery--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+        .mySlides3 {display:none; width:100%}
+        .display-container{position:relative}
+
+        /*---Css Nút qua lại---*/
+        .button-left{left:1%; font-size:20px}
+        .button-right{right:1%; font-size:20px }
+        .image-button{border:none;display:inline-block;padding:10px;height:50px;vertical-align:middle;overflow:hidden; color:#fff;background:#000;position:absolute;top:calc(50% - 25px); opacity:0.5;}
+        .image-button:hover{color:#000;background:#ccc;}
+
+        /*---Css Chấm tròn---*/
+        .badge {text-align:center; margin-bottom:16px; font-size:20px;position:absolute;bottom:0;}
+        .badge-white{color:#000!important;background-color:#fff!important}
+        .image-badge {display:inline-block;border-radius:50%;height:14px;width:14px; border:1px solid #ccc;}
+        .image-badge:hover{background:#fff;}
+
+    </style>
+
 </head>
 <body class="grey">
 

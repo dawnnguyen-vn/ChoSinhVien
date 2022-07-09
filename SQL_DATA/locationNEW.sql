@@ -1,5 +1,30 @@
 use
-learnhibernate;
+ecommerce_db;
+-- ROLE --
+INSERT INTO `role` (`id`, `name`)
+VALUES (1, 'ADMIN'),
+       (2, 'USER');
+-- CATEGORY --
+INSERT INTO `category` (`id`, `name`, `slug`)
+VALUES (1, 'Điện tử', 'dien-tu'),
+       (2, 'Xe cộ', 'xe-co'),
+       (3, 'Đồ dùng', 'do-dung'),
+       (4, 'Thời trang', 'thoi-trang'),
+       (5, 'Sở thích', 'so-thich');
+
+-- SERVICE_PACK --
+INSERT INTO `service_pack` (`id`, `name`, `points`, `price`)
+VALUES (1, 'PACK1', 10, 10000),
+       (2, 'PACK2', 20, 20000),
+       (3, 'PACK3', 30, 30000);
+
+-- USER --
+INSERT INTO `user` (`id`, `address`, `email`, `enabled`, `locked`, `name`, `password`, `phone`, `point`) VALUES (1, '', 'admin@gmail.com', 1, 0, 'ADMIN', '$2a$10$fDYfJKl7npsdPrGbDt/HB.a1zju1yPxIEszkVMw5Sg73K.qqh2QHe', '0000000000', 0);
+
+-- USER_ROLE --
+INSERT INTO `user_role` (`user_id`, `role_id`)
+VALUES (1, 1);
+
 -- PROVINCE--
 INSERT INTO `_province` (`id`, `_name`, `_code`)
 VALUES (1, 'Hồ Chí Minh', 'SG'),

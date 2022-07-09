@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ include file="/common/taglib.jsp" %>
-
+<c:url var="luuTinAPI" value="/api/home/luu-tin"/>
 <!-- filter -->
 <section>
     <div class="container white px-2 px-lg-2 mt-3 py-2 canh-giua">
@@ -38,10 +38,10 @@
             <div class=" row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <c:forEach var="item" items="${products}">
                     <div class="col mb-5">
-                        <a href="product-details.html">
+                        <a href="<c:url value='/tin-dang/${item.id}'/>">
                             <div class="card h-100 product-card">
                                 <!-- Product image-->
-                                <img class="card-img-top" src="${item.images.get(0).link}"
+                                <img class="card-img-top" src="/template/images/${item.images.get(0).link}"
                                      alt="..."/>
                                 <!-- Product details-->
                                 <div class="card-body canh-giua-flex-column">
@@ -51,8 +51,14 @@
                                         <!-- Product price-->
                                         <p class="fw-bold" style="color: red;">${item.price}</p>
                                     </div>
-                                    <a class="btn btn-outline-danger"><i class="fa fa-heart-o"
-                                                                         aria-hidden="true"></i></a>
+                                    <input type="hidden" name="productId" value="${item.id}">
+                                    <button type="button" id="btn-luu${item.id}" onclick="savePost(${item.id})" class="btn btn-outline-danger
+                                  <c:forEach var="like" items="${item.likes}">
+                                    <c:if test="${like.user.id.equals(myUser.id)}">
+                                        heart-luu
+                                    </c:if>
+                                  </c:forEach>
+                                        "><i class="fa fa-heart-o" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                         </a>
@@ -71,8 +77,32 @@
 </section>
 
 <script type="text/javascript">
-    var totalPages = ${paging.totalPage};
-    var currentPage = ${paging.page};
+
+    function savePost(id) {
+        event.stopPropagation();
+        event.preventDefault();
+        $.ajax({
+            url: "${luuTinAPI}",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(id),
+            success: function (data) {
+                if (data !== '') {
+                    window.location.replace("${login}");
+                }
+                $("#btn-luu" + id).toggleClass("heart-luu");
+            },
+
+            error: function (error) {
+                alert("Chua dang nhap");
+            }
+        });
+
+    };
+
+
+    let totalPages = ${paging.totalPage};
+    let currentPage = ${paging.page};
     $(function () {
         window.pagObj = $('#pagination').twbsPagination({
             totalPages: totalPages,

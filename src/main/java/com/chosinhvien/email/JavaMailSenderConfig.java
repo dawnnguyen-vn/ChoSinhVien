@@ -13,11 +13,11 @@ public class JavaMailSenderConfig {
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.mailgun.org");
-        mailSender.setPort(587);
+        mailSender.setHost("smtp.mailtrap.io");
+        mailSender.setPort(2525);
 
-        mailSender.setUsername("");
-        mailSender.setPassword("");
+        mailSender.setUsername("username");
+        mailSender.setPassword("password");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

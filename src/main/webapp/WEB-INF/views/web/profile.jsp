@@ -113,13 +113,16 @@
 
 <section class="mb-4">
     <div class="container white p-3">
-        <p><b>Tin đang đăng</b> - 0 tin</p>
+        <p><b>Tin đang đăng</b> - ${count} tin</p>
         <hr>
         <div style="margin: 5rem 0;" class="canh-giua-flex-column">
-            <div class="canh-giua text-center " style="width: 400px; height: 80px; background-color: #ffe9e9;">
-                <span>Bạn chưa có tin đăng cá nhân nào đang bán, thử đăng bán ngay</span>
-            </div>
-            <a href="tin-dang.html" class="btn btn-primary mt-3">
+            <c:if test="${count == 0}">
+                <div class="canh-giua text-center " style="width: 400px; height: 80px; background-color: #ffe9e9;">
+                    <span>Bạn chưa có tin đăng cá nhân nào đang bán, thử đăng bán ngay</span>
+                </div>
+            </c:if>
+
+            <a href="<c:url value='/dang-tin'/>" class="btn btn-primary mt-3">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 Đăng tin
             </a>

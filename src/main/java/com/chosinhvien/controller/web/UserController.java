@@ -4,7 +4,6 @@ import com.chosinhvien.dto.BillDto;
 import com.chosinhvien.dto.ProductDto;
 import com.chosinhvien.dto.UserDto;
 import com.chosinhvien.dto.UserDtoRead;
-import com.chosinhvien.entity.Bill;
 import com.chosinhvien.entity.Like;
 import com.chosinhvien.entity.User;
 import com.chosinhvien.model.MyUser;
@@ -12,6 +11,7 @@ import com.chosinhvien.service.IBillService;
 import com.chosinhvien.service.IProductService;
 import com.chosinhvien.service.IRegistrationService;
 import com.chosinhvien.service.IUserService;
+import com.chosinhvien.util.CustomException;
 import com.chosinhvien.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -39,14 +39,20 @@ public class UserController {
         return "login";
     }
 
+
     @GetMapping("/profile")
     public String getProfilePage(Model model) {
-        UserDtoRead userDto = mapper.map(userService.findByEmail(userService.getUsername()), UserDtoRead.class);
+
+
         if (SecurityUtils.isUserLoggedIn()) {
             MyUser auth = SecurityUtils.getPrincipal();
+            UserDtoRead userDto = mapper.map(userService.findByEmail(userService.getUsername()), UserDtoRead.class);
+            int count = productService.findAllByUser(auth.getId()).size();
             model.addAttribute("myUser", auth);
+            model.addAttribute("count", count);
+            model.addAttribute("user", userDto);
         }
-        model.addAttribute("user", userDto);
+
         return "/web/profile";
     }
 
@@ -100,15 +106,20 @@ public class UserController {
         User user = mapper.map(userDto, User.class);
         User newUser = registrationService.register(user);
         UserDtoRead read = mapper.map(newUser, UserDtoRead.class);
-        System.out.println(read.getEmail());
-        return "web/home";
+        return "web/dkthanhcong";
+    }
+
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestParam("email") String email) throws CustomException {
+        userService.resetPassword(email);
+        return "web/test";
     }
 
     @GetMapping("/signup/confirm")
     public String confirm(@RequestParam("token") String token, Model model) {
         String confirmed = registrationService.confirmToken(token);
         model.addAttribute("confirmed", confirmed);
-        return "web/test";
+        return "web/kichhoat";
     }
 
 }

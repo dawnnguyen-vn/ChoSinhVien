@@ -45,9 +45,6 @@
                 <div class="col my-4">
                     <li>
                         <a href='<c:url value="/${item.slug}"/>' class="canh-giua-flex-column">
-                            <div>
-                                <img class="img-category" src="" alt="">
-                            </div>
                             <span>${item.name}</span>
                         </a>
                     </li>

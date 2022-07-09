@@ -22,10 +22,4 @@ public class GlobalExceptionHandler {
         return model;
     }
 
-//    @ExceptionHandler(CustomException.class)
-//    private String customException(CustomException exception, Model model){
-//        Message message = new Message(new Date(), "Validation Error", exception.getMessage());
-//        model.addAttribute("message", message);
-//        return "redirect:/error";
-//    }
 }

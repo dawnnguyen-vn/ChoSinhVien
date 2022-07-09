@@ -31,8 +31,8 @@
     </form>
 
     <!-- đổi mật khẩu -->
-    <form action="/reset/password/" class="form-reset">
-        <input type="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+    <form action="<c:url value='/reset-password'/>" method="post" class="form-reset">
+        <input name="email" type="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
         <button style="width: 100%;" class="btn btn-primary btn-block" type="submit">Reset Password</button>
         <a style="text-align: center;" href="#" id="cancel_reset"><i class="fa fa-angle-left"></i> Trở lại</a>
     </form>

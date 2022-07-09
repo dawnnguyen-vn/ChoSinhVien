@@ -124,4 +124,9 @@ public class ProductService implements IProductService {
         List<Product> products = productRepo.findAllByUser(user);
         return mapper.mapAll(products, ProductDto.class);
     }
+
+    @Override
+    public void remove(Long id) {
+        productRepo.deleteById(id);
+    }
 }

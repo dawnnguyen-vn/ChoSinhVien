@@ -12,8 +12,21 @@
     <div class="container white">
         <div class="row ">
             <div class="col-md-8 p-3" >
-                <div class="img-product-details">
-                    <img class="img-full-100" src="/template/images/${product.images.get(0).link}" alt="">
+                <div class="img-product-details display-container">
+                    <c:forEach var="image" items="${product.images}">
+
+                    <img class="mySlides3 img-full-100" src="/template/images/${image.link}" alt="">
+                    </c:forEach>
+
+                    <button class="image-button button-left" onclick="plusDivs(-1)">&#10094;</button>
+                    <button class="image-button button-right" onclick="plusDivs(1)">&#10095;</button>
+
+                    <div class="badge" style="width:100%">
+
+                        <span class="image-badge" onclick="currentDiv(1)"></span>
+                        <span class="image-badge" onclick="currentDiv(2)"></span>
+                        <span class="image-badge" onclick="currentDiv(3)"></span>
+                    </div>
                 </div>
                 <div style="margin-top: 1rem;">
                     <h4>${product.name}</h4>
@@ -133,5 +146,34 @@
         });
 
     };
+
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function currentDiv(n) {
+        showDivs(slideIndex = n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides3");
+        var dots = document.getElementsByClassName("image-badge");
+        if (n > x.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = x.length}
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" badge-white", "");
+        }
+        x[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " badge-white";
+    }
+
+
 </script>
 

@@ -75,13 +75,6 @@ public class HomeController {
         return "error";
     }
 
-//    @PreAuthorize("hasRole")
-//    @PostMapping("/luu-tin")
-//    public String saveProduct(@RequestParam(value = "productId") Long id) {
-//        likeService.modifyUserLiked(id);
-//        return "redirect:/trang-chu";
-//    }
-
 
     @GetMapping("/mua-diem")
     public String getMuaDiemPage(HttpServletRequest req, Model model) {
@@ -153,6 +146,11 @@ public class HomeController {
                 .stream().map(product -> mapper.map(product, ProductDto.class))
                 .collect(Collectors.toList());
 
+        if (SecurityUtils.isUserLoggedIn()) {
+            MyUser auth = SecurityUtils.getPrincipal();
+            model.addAttribute("myUser", auth);
+        }
+
         model.addAttribute("products", products);
         model.addAttribute("paging", paging);
         model.addAttribute("slug", slug);
@@ -175,6 +173,11 @@ public class HomeController {
         List<ProductDto> products = productService.findAllByCategoryOrderByPriceDesc(category, pageable).getContent()
                 .stream().map(product -> mapper.map(product, ProductDto.class))
                 .collect(Collectors.toList());
+
+        if (SecurityUtils.isUserLoggedIn()) {
+            MyUser auth = SecurityUtils.getPrincipal();
+            model.addAttribute("myUser", auth);
+        }
 
         model.addAttribute("products", products);
         model.addAttribute("paging", paging);
@@ -199,6 +202,11 @@ public class HomeController {
         List<ProductDto> products = productService.findAllByName(name, pageable).getContent()
                 .stream().map(product -> mapper.map(product, ProductDto.class))
                 .collect(Collectors.toList());
+
+        if (SecurityUtils.isUserLoggedIn()) {
+            MyUser auth = SecurityUtils.getPrincipal();
+            model.addAttribute("myUser", auth);
+        }
 
         model.addAttribute("products", products);
         model.addAttribute("paging", paging);
